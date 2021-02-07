@@ -337,7 +337,7 @@
 					a++;
 					e.target.setAttribute('data', a);
 					кнопка_назад.setAttribute('data', a);
-					q ();
+					Листалка_товаров ();
 				}
 			}
 		}
@@ -357,11 +357,11 @@
 					кнопка_вперед.setAttribute('data', a);
 					кнопка_вперед.style.opacity = 1;
 					e.target.setAttribute('data', a);
-					q ();
+					Листалка_товаров ();
 				}
 			}
 		}
-		function q () {
+		function Листалка_товаров () {
 			li = k.childNodes;
 			for (j = 0; j < li.length; j++) {
 				li[j].style.display = 'none';
