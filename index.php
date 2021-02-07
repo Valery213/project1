@@ -245,9 +245,9 @@
 	}
 	function В_избранное (e) {
 		if (e.classList.contains('В_избранном')) {
+			// Удалим товар из избранного
 			e.classList.remove("В_избранном");
 			e.setAttribute ('title', 'Добавить в избранное');
-			// Удалим товар из избранного
 			r = new XMLHttpRequest();
 			r.open("POST", "http://localhost/сайт для гималайской соли/Шаблоны/Ajax/Удалить товар из сессии избранного.php", true);
 			r.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -258,9 +258,9 @@
 			});
 			r.send('Товар=' + e.parentNode.firstChild.innerHTML);
 		} else {
+			// Добавим товар в избранное
 			e.classList.add("В_избранном");
 			e.setAttribute ('title', 'Удалить из избранного');
-			// Добавим товар в избранное
 			r = new XMLHttpRequest();
 			r.open("POST", "http://localhost/сайт для гималайской соли/Шаблоны/Ajax/Добавить товар в сессию избранного.php", true);
 			r.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
