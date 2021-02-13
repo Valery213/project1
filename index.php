@@ -72,6 +72,7 @@
 	}
 	.Каталог {
 		text-align: center;
+		font-size: 0;
 	}
 	.Каталог:not(.фильтр) > li {
 		display: none;
@@ -256,7 +257,7 @@
 					// console.log (r.responseText);
 				}
 			});
-			r.send('Товар=' + e.parentNode.firstChild.innerHTML);
+			r.send('Товар=' + e.parentNode.firstChild.innerText);
 		} else {
 			// Добавим товар в избранное
 			e.classList.add("В_избранном");
@@ -269,7 +270,7 @@
 					// console.log (r.responseText);
 				}
 			});
-			r.send('Товар=' + e.parentNode.firstChild.innerHTML);
+			r.send('Товар=' + e.parentNode.firstChild.innerText);
 		}
 	}
 	window.onload = function() {
