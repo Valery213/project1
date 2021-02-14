@@ -21,7 +21,7 @@
 			щет2 += +(все_товары[i].children[3].value)
 		}
 		общая_стоимость.innerHTML = суммарная_стоимость_товаров
-		document.querySelector('.блок_Корзина .низ').children[2].innerHTML = щет2
+		document.querySelector('.блок_Корзина .низ li').children[2].innerText = щет2
 		document.querySelector('#щетчик_в_шапке').innerText = щет2
 	}
 	function закрыть_Корзину () {
@@ -54,7 +54,7 @@
 				массив = строка.split('; *')
 				массив.pop()
 				щет = 0
-				for ( строка in массив ) {
+				for (строка in массив) {
 					понятие =  массив[строка].split('; ')
 					Количество =  понятие[2].split(': ')
 					щет += +Количество[1]
@@ -125,14 +125,14 @@
 		<form>
 			<ul>
 				<li style="text-align: left; ">
-					<input type="text" placeholder="Имя">
-					<input type="text" placeholder="Город">
-					<input type="text" placeholder="Улица">
+					<input placeholder="Имя">
+					<input placeholder="Город">
+					<input placeholder="Улица">
 				</li>
 				<li style="text-align: right; ">
-					<input type="text" placeholder="Квартира">
-					<input type="text" placeholder="Телефон">
-					<input type="text" placeholder="email">
+					<input placeholder="Квартира">
+					<input placeholder="Телефон">
+					<input placeholder="email">
 				</li>
 				<li>
 					<a class="розовая_кнопка" href="#" onclick="вернуться_к_форме_заказа (); return false; ">Вернуться в корзину</a>
@@ -224,6 +224,7 @@
 		border-bottom: 1px solid #000;
 		padding: 10px 15px 0;
 		margin: 0;
+		font-size: 0;
 	}
 	.блок_Корзина .имя {
 		width: calc(45% - 70px);

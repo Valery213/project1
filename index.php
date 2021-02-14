@@ -220,162 +220,150 @@
 <script>
 	// Сделаем слайдер в иконке товара при наведении
 	function Наведение_мыши_на_товар (e) {
-		s = new XMLHttpRequest();
-		s.open("POST", "http://localhost/сайт для гималайской соли/Шаблоны/Ajax/Вывод_всех_картинок_в_блок_товара_в_каталоге.php", true);
-		s.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		s = new XMLHttpRequest()
+		s.open("POST", "http://localhost/сайт для гималайской соли/Шаблоны/Ajax/Вывод_всех_картинок_в_блок_товара_в_каталоге.php", true)
+		s.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
 		s.addEventListener("readystatechange", () => {
 			if(s.readyState === 4 && s.status === 200) {
-				e.parentNode.parentNode.innerHTML = s.responseText;
+				e.parentNode.parentNode.innerHTML = s.responseText
 			}
-		});
-		s.send('Каталог=' + e.getAttribute('Каталог'));
+		})
+		s.send('Каталог=' + e.getAttribute('Каталог'))
 	}
 	function Уход_мыши_с_товара (e) {
 		t = e.querySelectorAll('.Картинка');
 		for( i = 0; i < t.length; i++ ) {
-			t[i].style.display = 'none';
+			t[i].style.display = 'none'
 		}
-		e.firstChild.style.display = 'block';
+		e.firstChild.style.display = 'block'
 	}
 	function Наведение_мыши_на_картинку_товара (e) {
-		t = e.parentNode.querySelectorAll('.Картинка');
+		t = e.parentNode.querySelectorAll('.Картинка')
 		for( i = 0; i < t.length; i++ ) {
-			t[i].style.display = 'none';
+			t[i].style.display = 'none'
 		}
-		e.previousElementSibling.style.display = 'block';
+		e.previousElementSibling.style.display = 'block'
 	}
 	function В_избранное (e) {
 		if (e.classList.contains('В_избранном')) {
 			// Удалим товар из избранного
-			e.classList.remove("В_избранном");
-			e.setAttribute ('title', 'Добавить в избранное');
-			r = new XMLHttpRequest();
-			r.open("POST", "http://localhost/сайт для гималайской соли/Шаблоны/Ajax/Удалить товар из сессии избранного.php", true);
-			r.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			r.addEventListener("readystatechange", () => {
-				if(r.readyState === 4 && r.status === 200) {
-					// console.log (r.responseText);
-				}
-			});
-			r.send('Товар=' + e.parentNode.firstChild.innerText);
+			e.classList.remove("В_избранном")
+			e.title = 'Добавить в избранное'
+			r = new XMLHttpRequest()
+			r.open("POST", "http://localhost/сайт для гималайской соли/Шаблоны/Ajax/Удалить товар из сессии избранного.php", true)
+			r.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+			r.send('Товар=' + e.parentNode.firstChild.innerText)
 		} else {
 			// Добавим товар в избранное
-			e.classList.add("В_избранном");
-			e.setAttribute ('title', 'Удалить из избранного');
-			r = new XMLHttpRequest();
-			r.open("POST", "http://localhost/сайт для гималайской соли/Шаблоны/Ajax/Добавить товар в сессию избранного.php", true);
-			r.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			r.addEventListener("readystatechange", () => {
-				if(r.readyState === 4 && r.status === 200) {
-					// console.log (r.responseText);
-				}
-			});
-			r.send('Товар=' + e.parentNode.firstChild.innerText);
+			e.classList.add("В_избранном")
+			e.title = 'Удалить из избранного'
+			r = new XMLHttpRequest()
+			r.open("POST", "http://localhost/сайт для гималайской соли/Шаблоны/Ajax/Добавить товар в сессию избранного.php", true)
+			r.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+			r.send('Товар=' + e.parentNode.firstChild.innerText)
 		}
 	}
 	window.onload = function() {
 		// Посчитаем товары в щетчик в шапку
-		s = new XMLHttpRequest();
-		s.open("POST", "http://localhost/сайт для гималайской соли/Шаблоны/Ajax/Вывод всех товаров.php", true);
-		s.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		s = new XMLHttpRequest()
+		s.open("POST", "http://localhost/сайт для гималайской соли/Шаблоны/Ajax/Вывод всех товаров.php", true)
+		s.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
 		s.addEventListener("readystatechange", () => {
 			if(s.readyState === 4 && s.status === 200) {
-				строка = s.responseText;
-				массив = строка.split('; *');
-				массив.pop();
-				щет = 0;
+				строка = s.responseText
+				массив = строка.split('; *')
+				массив.pop()
+				щет = 0
 				for ( строка in массив ) {
-					понятие = массив[строка].split('; ');
-					Количество = понятие[2].split(': ');
-					щет += parseInt(Количество[1]);
+					понятие = массив[строка].split('; ')
+					Количество = понятие[2].split(': ')
+					щет += +Количество[1]
 				}
-				document.querySelector('#щетчик_в_шапке').innerHTML = щет;
+				document.querySelector('#щетчик_в_шапке').innerText = щет
 				// Спрячем / покажем кнопку Посмотреть корзину
-				if (document.querySelector('#щетчик_в_шапке').innerHTML != '0') {
-					document.querySelector('.Открыть_корзину').style.opacity = '1';
+				if (document.querySelector('#щетчик_в_шапке').innerText != '0') {
+					document.querySelector('.Открыть_корзину').style.opacity = 1
 				} else {
-					document.querySelector('.Открыть_корзину').style.opacity = '0';
+					document.querySelector('.Открыть_корзину').style.opacity = 0
 				}
 			}
-		});
-		s.send();
-		Пагинация = document.querySelector('.Правая-колонка .Пагинация');
-		g = document.querySelector('.Избранное');
+		})
+		s.send()
+		Пагинация = document.querySelector('.Правая-колонка .Пагинация')
+		Спаны = Пагинация.children
+		g = document.querySelector('.Избранное')
 		if (g != undefined) {
-			Вывод_избранных_товаров_в_каталоге ();
+			Вывод_избранных_товаров_в_каталоге ()
 		}
-		k = document.querySelector('.Правая-колонка .Каталог');
-		l = document.querySelector('.блок-Категории-товаров .div');
+		k = document.querySelector('.Правая-колонка .Каталог')
+		l = document.querySelector('.блок-Категории-товаров .div')
 		if (l != undefined) {
 			l.onclick = function (e) {
-				document.body.scrollTop = 0;
-				for(i = 0; i < l.querySelectorAll('span').length; i++){
-					l.children[i].classList.remove('a');
+				document.body.scrollTop = 0
+				for(let i = 0; i < l.children.length; i++){
+					l.children[i].classList.remove('a')
 				}
-				e.target.classList.add('a');
-				k.innerHTML = '';
-				Пагинация.innerHTML = '';
-				Вывод_товаров_в_каталоге ();
-				r.send('t=' + e.target.innerHTML);
-				кнопка_назад.setAttribute ('data', 1);
-				кнопка_вперед.setAttribute ('data', 1);
+				e.target.classList.add('a')
+				k.innerHTML = ''
+				Пагинация.innerHTML = ''
+				Вывод_товаров_в_каталоге ()
+				r.send('t=' + e.target.innerHTML)
+				кнопка_назад.data = 1
+				кнопка_вперед.data = 1
 			}
-			Вывод_товаров_в_каталоге ();
-			r.send ();
+			Вывод_товаров_в_каталоге ()
+			r.send ()
 		}
-		кнопка_вперед = document.querySelector('.Пагинация-блок .Вперед');
-		кнопка_назад = document.querySelector('.Пагинация-блок .Назад');
+		кнопка_вперед = document.querySelector('.Пагинация-блок .Вперед')
+		кнопка_назад = document.querySelector('.Пагинация-блок .Назад')
 		if (кнопка_вперед != undefined) {
 			кнопка_вперед.onclick = function (e) {
-				a = e.target.getAttribute('data');
-				спаны = Пагинация.querySelectorAll('span');
-				if ( a == спаны.length - 1) {
-					кнопка_вперед.setAttribute('style', 'cursor: default; opacity: 0;');
+				a = e.target.getAttribute('data')
+				if ( a == Спаны.length - 1) {
+					кнопка_вперед.style = 'cursor: default; opacity: 0;'
 				}
-				if ( a != спаны.length) {
-					document.body.scrollTop = 0;
-					кнопка_назад.style.opacity = 1;
-					a++;
-					e.target.setAttribute('data', a);
-					кнопка_назад.setAttribute('data', a);
-					Листалка_товаров ();
+				if ( a != Спаны.length) {
+					document.body.scrollTop = 0
+					кнопка_назад.style.opacity = 1
+					e.target.setAttribute('data', ++a)
+					кнопка_назад.setAttribute('data', a)
+					Листалка_товаров ()
 				}
 			}
 		}
 		if (кнопка_назад != undefined) {
 			кнопка_назад.onclick = function (e) {
-				a = e.target.getAttribute('data');
-				a--;
-				if (a == 1) {
-					кнопка_назад.style.opacity = 0;
+				a = e.target.getAttribute('data')
+				if (--a == 1) {
+					кнопка_назад.style.opacity = 0
 				}
 				if (a == -1) {
 					return
 				} else if (a == 0){
 					// console.log(a);
 				} else {
-					document.body.scrollTop = 0;
-					кнопка_вперед.setAttribute('data', a);
-					кнопка_вперед.style.opacity = 1;
-					e.target.setAttribute('data', a);
-					Листалка_товаров ();
+					document.body.scrollTop = 0
+					кнопка_вперед.setAttribute('data', a)
+					кнопка_вперед.style.opacity = 1
+					e.target.setAttribute('data', a)
+					Листалка_товаров ()
 				}
 			}
 		}
 		function Листалка_товаров () {
-			li = k.childNodes;
+			li = k.childNodes
 			for (j = 0; j < li.length; j++) {
-				li[j].style.display = 'none';
+				li[j].style.display = 'none'
 			}
 			for (z = (a - 1) * 8; z < a * 8; z++) {
 				if (li[z] !== undefined) {
-					li[z].style.display = 'inline-block';
+					li[z].style.display = 'inline-block'
 				}
 			}
-			for(i = 0; i < Пагинация.querySelectorAll('span').length; i++){
-				Пагинация.children[i].classList.remove('a');
+			for(i = 0; i < Спаны.length; i++){
+				Спаны[i].classList.remove('a')
 			}
-			Пагинация.querySelectorAll('span')[a - 1].classList.add('a');
+			Спаны[a - 1].classList.add('a')
 		};
 	}
 </script>

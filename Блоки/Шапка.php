@@ -45,30 +45,31 @@
 					r.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
 					r.addEventListener("readystatechange", () => {
 						if(r.readyState === 4 && r.status === 200) {
-							массив = r.responseText.split('; *').pop()
+							массив = r.responseText.split('; *')
+							массив.pop()
 							строки = document.querySelector('.блок_Корзина .товары')
-							общая_стоимость = 0
+							общая_стоимость  = 0
 							общее_количество = 0
 							for (i in массив) {
 								понятие    = массив [i].split('; ')
 								Товар      = понятие[0].split(': ')
 								Категория  = понятие[3].split(': ')
-								строки.innerHTML += `<li Товар="${Товар[1]}" Категория="${Категория[1]}"></li>`
 								Стоимость  = понятие[1].split(': ')
 								Количество = понятие[2].split(': ')
 								общая_стоимость  += +(Стоимость[1] * Количество[1])
 								общее_количество += +(Количество[1])
-								строки.children[i].innerHTML += `<img src="http://localhost/сайт для гималайской соли/Товары/${Категория[1]}/${Товар[1]}/1.jpg">`
-								строки.children[i].innerHTML += `<a class='имя' href="?страница=О товаре&категория=${Категория[1]}&Название_товара=${Товар[1]}">${Товар[1]}</a>`
-								строки.children[i].innerHTML += `<span class='стоимость'>${Стоимость[1]}</span>`
-								строки.children[i].innerHTML += `<input type='text' value='${Количество[1]}' class='количество' onkeyup='пересчитаем_стоимость (); пересчет (this); '>`
+								строки.innerHTML += `<li Товар="${Товар[1]}" Категория="${Категория[1]}"></li>`
 								строки.children[i].innerHTML += `
+									<img src="http://localhost/сайт для гималайской соли/Товары/${Категория[1]}/${Товар[1]}/1.jpg">
+									<a class='имя' href="?страница=О товаре&категория=${Категория[1]}&Название_товара=${Товар[1]}">${Товар[1]}</a>
+									<span class='стоимость'>${Стоимость[1]}</span>
+									<input value='${Количество[1]}' class='количество' onkeyup='пересчитаем_стоимость (); пересчет (this); '>
 									<ul>
 										<li onclick='кнопка_маленькая_плюс (this);'>+</li>
 										<li onclick='кнопка_маленькая_минус (this);'>-</li>
 									</ul>
+									<a href="#" class="удалить" onclick="удалить_товар (this);">Удалить</a>
 								`
-								строки.children[i].innerHTML += '<a href="#" class="удалить" onclick="удалить_товар (this);">Удалить</a>'
 							}
 							document.querySelector('.блок_Корзина .низ').children[1].innerHTML = общая_стоимость
 							document.querySelector('.блок_Корзина .низ').children[2].innerHTML = общее_количество
