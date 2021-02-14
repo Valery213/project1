@@ -24,5 +24,3 @@
 		</ul>
 	</div>
 </div>
-<style>
-</style>

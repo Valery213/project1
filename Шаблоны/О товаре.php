@@ -20,8 +20,8 @@
 				</div>
 			</div><div>
 				<h1><?php echo $t; ?></h1>
-				<div>
-					<div class="Стоимость">
+				<div style='overflow: hidden; '>
+					<p class="Стоимость">
 						<span id="Стоимость_товара">
 							<?php
 								// Закодируем урл с пробелами
@@ -31,29 +31,26 @@
 							?>
 						</span>
 						бел. руб.
-					</div><div class="форма_в_корзину">
-						<span class="Количество">Количество</span>
-						<form action="">
-							<table>
-								<tr>
-									<td rowspan="2">
-										<input type="text" class="поле_ввода" value="1">
-									</td>
-									<td>
-										<input type="button" value="+" class="кнопка_маленькая кнопка_маленькая_плюс">
-									</td>
-									<td rowspan="2">
-										<input type="button" value="В корзину" class="в_корзину">
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<input type="button" value="-" class="кнопка_маленькая кнопка_маленькая_минус">
-									</td>
-								</tr>
-							</table>
-						</form>
-					</div>
+					</p>
+					<table class="форма_в_корзину">
+						<caption>Количество</caption>
+						<tr>
+							<td rowspan="2">
+								<input type="text" class="поле_ввода" value="1">
+							</td>
+							<td>
+								<input type="button" value="+" class="кнопка_маленькая кнопка_маленькая_плюс">
+							</td>
+							<td rowspan="2">
+								<input type="button" value="В корзину" class="в_корзину">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="button" value="-" class="кнопка_маленькая кнопка_маленькая_минус">
+							</td>
+						</tr>
+					</table>
 				</div>
 				<p class="Лайк" onclick="В_избранное_в_товаре (this); ">Лайки</p>
 				<hr>
@@ -98,8 +95,7 @@
 		margin: 0 0 20px;
 	}
 	.блок-товара h1 + * > * {
-		width: 50%;
-		display: inline-block;	
+		display: inline;
 		vertical-align: top;
 		position: relative;
 	}
@@ -142,6 +138,13 @@
 		top: 0;
 		left: -5px;
 	}
+	.блок-товара .форма_в_корзину {
+		float: right;
+	}
+	.блок-товара .форма_в_корзину caption {
+		text-align: left;
+		margin: 0 0 10px;
+	}
 	.блок-товара .форма_в_корзину input {
 		border: 1px solid #d5d5d5;
 		border-radius: 3px; 
@@ -178,44 +181,33 @@
 	?>';
 	Лайк = document.querySelector('.Лайк');
 	if (массив_лайков.indexOf('<?php echo $t; ?>') !== -1){
-		Лайк.classList.add("В_избранном");
-		Лайк.setAttribute ('title', 'Удалить из избранного');
+		Лайк.classList.add("В_избранном")
+		Лайк.title = 'Удалить из избранного'
 	} else {
-		Лайк.classList.remove("В_избранном");
-		Лайк.setAttribute ('title', 'Добавить в избранное');
+		Лайк.classList.remove("В_избранном")
+		Лайк.title = 'Добавить в избранное'
 	}
 	function В_избранное_в_товаре (e) {
 		if (e.classList.contains('В_избранном')) {
-			e.classList.remove("В_избранном");
-			e.setAttribute ('title', 'Добавить в избранное');
+			e.classList.remove("В_избранном")
+			e.title = 'Добавить в избранное'
 			// Удалим товар из избранного
-			r = new XMLHttpRequest();
-			r.open("POST", "http://localhost/сайт для гималайской соли/Шаблоны/Ajax/Удалить товар из сессии избранного.php", true);
-			r.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			r.addEventListener("readystatechange", () => {
-				if(r.readyState === 4 && r.status === 200) {
-					// console.log (r.responseText);
-				}
-			});
-			r.send('Товар=<?php echo $t; ?>');
+			r = new XMLHttpRequest()
+			r.open("POST", "http://localhost/сайт для гималайской соли/Шаблоны/Ajax/Удалить товар из сессии избранного.php", true)
+			r.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+			r.send('Товар=<?php echo $t; ?>')
 		} else {
-			e.classList.add("В_избранном");
-			e.setAttribute ('title', 'Удалить из избранного');
+			e.classList.add("В_избранном")
+			e.title = 'Удалить из избранного'
 			// Добавим товар в избранное
-			r = new XMLHttpRequest();
-			r.open("POST", "http://localhost/сайт для гималайской соли/Шаблоны/Ajax/Добавить товар в сессию избранного.php", true);
-			r.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			r.addEventListener("readystatechange", () => {
-				if(r.readyState === 4 && r.status === 200) {
-					// console.log (r.responseText);
-				}
-			});
-			r.send('Товар=<?php echo $t; ?>');
+			r = new XMLHttpRequest()
+			r.open("POST", "http://localhost/сайт для гималайской соли/Шаблоны/Ajax/Добавить товар в сессию избранного.php", true)
+			r.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+			r.send('Товар=<?php echo $t; ?>')
 		}
 	}
 	document.querySelector('.кнопка_маленькая_плюс').onclick = function () {
-		a = document.querySelector('.поле_ввода').value;
-		document.querySelector('.поле_ввода').value = ++a;
+		document.querySelector('.поле_ввода').value = ++document.querySelector('.поле_ввода').value;
 	}
 	document.querySelector('.кнопка_маленькая_минус').onclick = function () {
 		a = document.querySelector('.поле_ввода').value;
@@ -224,50 +216,42 @@
 		}
 	}
 	document.querySelector('.слайдер').onclick = function (e) {
-		document.querySelector('#большая_картинка').setAttribute ('src', e.target.getAttribute ('src'));
+		document.querySelector('#большая_картинка').src = e.target.src;
 	}
 	document.querySelector('.в_корзину').onclick = function () {
 		// Добавим в сессию корзины товар аяксом
-		r = new XMLHttpRequest();
-		r.open("POST", "http://localhost/сайт для гималайской соли/Шаблоны/Ajax/Добавить товар в сессию корзины.php", true);
-		r.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		r.addEventListener("readystatechange", () => {
-			if(r.readyState === 4 && r.status === 200) {
-				// console.log (r.responseText);
-			}
-		});
-		Количество_товара = document.querySelector('.поле_ввода').value;
-		Стоимость_товара  = document.querySelector('#Стоимость_товара').innerHTML;
-		
-		var категория = document.location.search;
-		var searchParams = new URLSearchParams(категория);
-		// console.log(searchParams.get("категория"));
-		
-		r.send('Товар=<?php echo $t; ?>&Стоимость_товара=' + Стоимость_товара + '&Количество_товара=' + Количество_товара + '&Категория=' + searchParams.get("категория"));
+		r = new XMLHttpRequest()
+		r.open("POST", "http://localhost/сайт для гималайской соли/Шаблоны/Ajax/Добавить товар в сессию корзины.php", true)
+		r.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+		Количество_товара = document.querySelector('.поле_ввода').value
+		Стоимость_товара  = document.querySelector('#Стоимость_товара').innerText
+		let категория = document.location.search
+		let searchParams = new URLSearchParams(категория)
+		r.send('Товар=<?php echo $t; ?>&Стоимость_товара=' + Стоимость_товара + '&Количество_товара=' + Количество_товара + '&Категория=' + searchParams.get("категория"))
 		// Прибавим щет корзины в шапке
-		s = new XMLHttpRequest();
-		s.open("POST", "http://localhost/сайт для гималайской соли/Шаблоны/Ajax/Вывод всех товаров.php", true);
-		s.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		s = new XMLHttpRequest()
+		s.open("POST", "http://localhost/сайт для гималайской соли/Шаблоны/Ajax/Вывод всех товаров.php", true)
+		s.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
 		s.addEventListener("readystatechange", () => {
 			if(s.readyState === 4 && s.status === 200) {
-				строка = s.responseText;
-				массив = строка.split('; *');
-				массив.pop();
-				щет = 0;
-				for ( строка in массив ) {
-					понятие = массив[строка].split('; ');
-					Количество = понятие[2].split(': ');
-					щет += parseInt(Количество[1]);
+				строка = s.responseText
+				массив = строка.split('; *')
+				массив.pop()
+				щет = 0
+				for (строка in массив) {
+					понятие = массив[строка].split('; ')
+					Количество = понятие[2].split(': ')
+					щет += +Количество[1]
 				}
-				document.querySelector('#щетчик_в_шапке').innerHTML = щет;
+				document.querySelector('#щетчик_в_шапке').innerHTML = щет
 				// Спрячем / покажем кнопку Посмотреть корзину
 				if (document.querySelector('#щетчик_в_шапке').innerHTML != '0') {
-					document.querySelector('.Открыть_корзину').style.opacity = '1';
+					document.querySelector('.Открыть_корзину').style.opacity = '1'
 				} else {
-					document.querySelector('.Открыть_корзину').style.opacity = '0';
+					document.querySelector('.Открыть_корзину').style.opacity = '0'
 				}
 			}
 		});
-		s.send();
+		s.send()
 	}
 </script>
